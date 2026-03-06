@@ -1,7 +1,7 @@
 # Taller 1 - Hello Android
 
 ## Información del Estudiante
-- Nombre: Esteban Alberto Avila Corredor
+- Nombre: Juan Sebastian Ropero Amado
 - Grupo: E191
 - Fecha: 05/03/2026
 
