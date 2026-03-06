@@ -27,5 +27,5 @@ Pinterest — adoptó Kotlin para reducir los errores de NullPointerException y 
 
 ## Capturas de Pantalla
 
-![Captura del emulador](docs/captura_emulador.png)
+![Captura del emulador](docs/captura_emulador.jpeg)
 "# andorid-mobile" 
