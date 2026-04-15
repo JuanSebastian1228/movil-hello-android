@@ -1,4 +1,5 @@
-package com.ropero.helloandroid.ui
+
+/*package com.ropero.helloandroid.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -78,4 +79,4 @@ class UserListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
+}*/

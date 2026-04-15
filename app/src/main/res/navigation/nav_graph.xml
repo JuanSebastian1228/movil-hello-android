@@ -3,28 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/userListFragment">
+    app:startDestination="@id/taskListFragment">
+    <!--    app:startDestination="@id/userListFragment">-->
 
-    <fragment
-        android:id="@+id/userListFragment"
-        android:name="com.ropero.helloandroid.ui.UserListFragment"
-        android:label="Lista de Usuarios"
-        tools:layout="@layout/fragment_user_list">
+<!--    <fragment-->
+<!--        android:id="@+id/userListFragment"-->
+<!--        android:name="com.ropero.helloandroid.ui.UserListFragment"-->
+<!--        android:label="Lista de Usuarios"-->
+<!--        tools:layout="@layout/fragment_user_list">-->
 
-        <action
-            android:id="@+id/action_list_to_detail"
-            app:destination="@id/userDetailFragment" />
-    </fragment>
+<!--        <action-->
+<!--            android:id="@+id/action_list_to_detail"-->
+<!--            app:destination="@id/userDetailFragment" />-->
+<!--    </fragment>-->
 
-    <fragment
-        android:id="@+id/userDetailFragment"
-        android:name="com.ropero.helloandroid.ui.UserDetailFragment"
-        android:label="Detalle de Usuario"
-        tools:layout="@layout/fragment_user_detail">
+        <fragment
+            android:id="@+id/taskListFragment"
+            android:name="com.ropero.helloandroid.ui.task.TaskListFragment"
+            android:label="Lista de Tareas"
+            tools:layout="@layout/fragment_task_list">
 
-        <argument
-            android:name="userId"
-            app:argType="integer" />
-    </fragment>
+            <action
+                android:id="@+id/action_taskList_to_taskDetail"
+                app:destination="@id/taskDetailFragment" />
+        </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/userDetailFragment"-->
+<!--        android:name="com.ropero.helloandroid.ui.UserDetailFragment"-->
+<!--        android:label="Detalle de Usuario"-->
+<!--        tools:layout="@layout/fragment_user_detail">-->
+
+<!--        <argument-->
+<!--            android:name="userId"-->
+<!--            app:argType="integer" />-->
+<!--    </fragment>-->
+
+    <!-- DETALLE DE TAREA -->
+        <fragment
+            android:id="@+id/taskDetailFragment"
+            android:name="com.ropero.helloandroid.ui.task.TaskDetailFragment"
+            android:label="Detalle de Tarea"
+            tools:layout="@layout/fragment_task_detail" />
 
 </navigation>
