@@ -101,3 +101,66 @@ El Repository actúa como una capa de abstracción entre el ViewModel y las fuen
 
 ![Lista de usuarios](docs/screenshot_list.png)
 ![Detalle de usuario](docs/screenshot_detail.png)
+
+---
+
+## Taller 3 - Lista de Tareas con Recordatorios
+**Fecha:** 14-04-2026
+
+### Descripción de la Implementación
+
+En este taller se desarrolló una aplicación funcional de gestión de tareas que permite crear, visualizar, editar y eliminar tareas, incorporando además un sistema de recordatorios mediante notificaciones.
+
+Se implementó una interfaz basada en Fragments utilizando Navigation Component, donde se cuenta con una pantalla principal para la lista de tareas y una pantalla de detalle para la creación y edición de las mismas.
+
+Para la persistencia de la información se utilizó SharedPreferences en conjunto con Gson, lo que permite almacenar las tareas localmente en formato JSON.
+
+Adicionalmente, se mejoró la experiencia de usuario mediante el uso de RecyclerView con diseño tipo CardView, logrando una interfaz más moderna y organizada.
+
+---
+
+### Funcionalidades Implementadas
+
+- Creación de tareas con título y descripción.
+- Edición de tareas existentes.
+- Eliminación de tareas mediante gesto swipe (deslizar).
+- Visualización de tareas en formato de tarjetas (CardView).
+- Navegación entre pantallas usando Navigation Component.
+- Persistencia de datos con SharedPreferences.
+- Programación de recordatorios usando AlarmManager.
+- Recepción de eventos mediante BroadcastReceiver para mostrar notificaciones.
+
+---
+
+### Sistema de Recordatorios
+
+Para la implementación de recordatorios se utilizó el componente **AlarmManager**, el cual permite programar la ejecución de una acción en un tiempo determinado.
+
+Cuando el usuario activa la opción de recordatorio al crear o editar una tarea, se programa una alarma que, al cumplirse, ejecuta un BroadcastReceiver encargado de mostrar una notificación en el dispositivo.
+
+El tipo de recordatorio implementado fue:
+
+**Notificación en la barra de estado del dispositivo**
+
+Esto permite alertar al usuario sobre tareas pendientes incluso si la aplicación no se encuentra abierta.
+
+---
+
+### Capturas de Pantalla
+
+#### Lista de Tareas
+![Lista de tareas](docs/tasklistfragment.png)
+
+#### Detalle de Tarea
+![Detalle de tarea](docs/taskdetailfragment.png)
+
+#### Edición de Tarea
+![Edición de tarea](docs/taskdetailfragment_edit.png)
+
+#### Notificación de Recordatorio
+![Notificación](docs/pantalla_alarma.png)
+
+#### Diagrama
+![Diagrama](docs/Diagrama.png)
+
+---
