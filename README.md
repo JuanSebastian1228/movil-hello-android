@@ -105,7 +105,7 @@ El Repository actúa como una capa de abstracción entre el ViewModel y las fuen
 ---
 
 ## Taller 3 - Lista de Tareas con Recordatorios
-**Fecha:** 14-04-2026
+**Fecha:** 15-04-2026
 
 ### Descripción de la Implementación
 
