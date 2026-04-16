@@ -10,6 +10,7 @@ import com.ropero.helloandroid.R
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ropero.helloandroid.data.task.TaskRepository
+import androidx.recyclerview.widget.ItemTouchHelper
 class TaskListFragment : Fragment() {
 
     private lateinit var btnAdd: Button
@@ -36,11 +37,49 @@ class TaskListFragment : Fragment() {
         val repository = TaskRepository(requireContext())
         val tasks = repository.getAllTasks()
 
-        val adapter = TaskAdapter(tasks)
+        val adapter = TaskAdapter(tasks) { task ->
+            val bundle = Bundle().apply {
+                putInt("task_id", task.id)
+            }
+            findNavController().navigate(R.id.action_taskList_to_taskDetail, bundle)
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        val itemTouchHelper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val position = viewHolder.adapterPosition
+                val task = tasks[position]
+
+                val repository = TaskRepository(requireContext())
+                repository.deleteTask(task.id)
+
+                Toast.makeText(requireContext(), "Tarea eliminada", Toast.LENGTH_SHORT).show()
+
+                // refrescar lista
+                val newTasks = repository.getAllTasks()
+                recyclerView.adapter = TaskAdapter(newTasks) { t ->
+                    val bundle = Bundle().apply {
+                        putInt("task_id", t.id)
+                    }
+                    findNavController().navigate(R.id.action_taskList_to_taskDetail, bundle)
+                }
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
     }
 }

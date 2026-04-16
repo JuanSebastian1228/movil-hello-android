@@ -59,14 +59,31 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"/>
 
-    <!-- Botón guardar -->
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutButtons"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Guardar"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/cbReminder"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Volver" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Guardar" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,9 @@ class TaskDetailFragment : Fragment() {
     private lateinit var etDescription: EditText
     private lateinit var cbReminder: CheckBox
     private lateinit var btnSave: Button
+    private var taskId: Int? = null
+    private var currentTask: Task? = null
+    private lateinit var btnBack: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,29 +39,60 @@ class TaskDetailFragment : Fragment() {
         etDescription = view.findViewById(R.id.etDescription)
         cbReminder = view.findViewById(R.id.cbReminder)
         btnSave = view.findViewById(R.id.btnSave)
+        btnBack = view.findViewById(R.id.btnBack)
+
+        val repository = TaskRepository(requireContext())
+
+        taskId = arguments?.getInt("task_id")
+
+        if (taskId != null) {
+            currentTask = repository.getAllTasks().find { it.id == taskId }
+
+            currentTask?.let { task ->
+                etTitle.setText(task.title)
+                etDescription.setText(task.description)
+                cbReminder.isChecked = task.hasReminder
+            }
+        }
+
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
 
         btnSave.setOnClickListener {
+
             val title = etTitle.text.toString()
             val description = etDescription.text.toString()
             val reminder = cbReminder.isChecked
 
-            Toast.makeText(requireContext(), "Click guardar", Toast.LENGTH_SHORT).show()
-
-            println("Task: $title - $description - $reminder")
-
-            // GUARDAR TAREA
             val repository = TaskRepository(requireContext())
 
-            val task = Task(
-                id = System.currentTimeMillis().toInt(),
-                title = title,
-                description = description,
-                hasReminder = reminder
-            )
+            if (currentTask != null) {
+                // ACTUALIZAR
+                val updatedTask = currentTask!!.copy(
+                    title = title,
+                    description = description,
+                    hasReminder = reminder
+                )
 
-            repository.addTask(task)
+                repository.updateTask(updatedTask)
 
-            Toast.makeText(requireContext(), "Tarea guardada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Tarea actualizada", Toast.LENGTH_SHORT).show()
+
+            } else {
+                // ➕ CREAR NUEVA
+                val newTask = Task(
+                    id = System.currentTimeMillis().toInt(),
+                    title = title,
+                    description = description,
+                    hasReminder = reminder
+                )
+
+                repository.addTask(newTask)
+
+                Toast.makeText(requireContext(), "Tarea guardada", Toast.LENGTH_SHORT).show()
+            }
 
             //PROGRAMAR RECORDATORIO
             if (reminder) {
@@ -66,7 +100,7 @@ class TaskDetailFragment : Fragment() {
                 Toast.makeText(requireContext(), "Recordatorio activado", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(requireContext(), TaskReminderReceiver::class.java)
-                intent.putExtra("task_title", title) //
+                intent.putExtra("task_title", title)
 
                 val requestCode = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
 
@@ -84,17 +118,15 @@ class TaskDetailFragment : Fragment() {
 
                         Toast.makeText(requireContext(), "Permiso de alarma no concedido", Toast.LENGTH_LONG).show()
 
-                        val intent = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                        startActivity(intent)
+                        val intentPermiso = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        startActivity(intentPermiso)
                         return@setOnClickListener
                     }
                 }
 
                 val triggerTime = SystemClock.elapsedRealtime() + 5000
 
-                //usar metodo correcto
                 try {
-
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                         alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -115,12 +147,12 @@ class TaskDetailFragment : Fragment() {
                     e.printStackTrace()
                     Toast.makeText(requireContext(), "Error al programar alarma", Toast.LENGTH_LONG).show()
                 }
-
-                Toast.makeText(requireContext(), "Alarma programada", Toast.LENGTH_SHORT).show()
             }
 
-            // Volver
+            // VOLVER A LA LISTA
             findNavController().navigateUp()
         }
+
+
     }
 }

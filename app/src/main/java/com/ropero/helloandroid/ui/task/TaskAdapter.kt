@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ropero.helloandroid.R
 import com.ropero.helloandroid.data.task.Task
 
-class TaskAdapter(private val tasks: List<Task>) :
-    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    private val tasks: List<Task>,
+    private val onClick: (Task) -> Unit
+) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvTitle: TextView = view.findViewById(R.id.tvTitle)
@@ -26,6 +28,10 @@ class TaskAdapter(private val tasks: List<Task>) :
         val task = tasks[position]
         holder.tvTitle.text = task.title
         holder.tvDescription.text = task.description
+
+        holder.itemView.setOnClickListener {
+            onClick(task)
+        }
     }
 
     override fun getItemCount(): Int = tasks.size
